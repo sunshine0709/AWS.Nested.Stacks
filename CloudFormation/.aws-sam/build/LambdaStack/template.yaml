@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Parameters:
+  DynamoDbTable:
+    Type: String
+Resources:
+  LambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Architectures:
+      - arm64
+      FunctionName: AWS-Nested-Stack-Lambda-ProtoType
+      Runtime: dotnet6
+      MemorySize: 128
+      Timeout: 30
+      CodeUri: LambdaFunction
+      Handler: AWS.Nested.Stacks::AWS.Nested.Stacks.Function::FunctionHandlerAsync
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: DynamoDbTable
+    Metadata:
+      SamResourceId: LambdaFunction
+Outputs:
+  LambdaFunctionArn:
+    Description: Lambda Arn
+    Value:
+      Fn::GetAtt:
+      - LambdaFunction
+      - Arn

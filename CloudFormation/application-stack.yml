@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: aws nested stack example
+
+Resources:
+  DynamoDbStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./Resources/nested-stack-dynamodb.yml
+
+  LambdaStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./Resources/nested-stack-lambda.yml
+      Parameters:
+        DynamoDbTable: !GetAtt DynamoDbStack.Outputs.TableName
+    DependsOn: DynamoDbStack
+
+Outputs:
+  LambdaFunctionName:
+    Description: The name of the Lambda function
+    Value: !GetAtt LambdaStack.Outputs.LambdaFunctionArn

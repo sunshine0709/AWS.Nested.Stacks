@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  DynamoDbTable:
+    Type: AWS::DynamoDB::Table
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: nested-stack-example
+      AttributeDefinitions:
+        - AttributeName: row_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: row_id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      
+Outputs:
+  TableName:
+    Description: The name of the DynamoDB table
+    Value: !Ref DynamoDbTable
