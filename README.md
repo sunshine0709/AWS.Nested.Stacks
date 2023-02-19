@@ -5,6 +5,29 @@ All resources are deployed using a nested stack. The nested stack is split into 
 - Stack 1 -> The DynamoDb resource.
 - Stack 2 -> The Lambda resource.
 
+Take a look at the parent stack found under the CloudFormation folder-> `application-stack.yml`.
+
+This file lok soemthing like this..
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: aws nested stack example
+
+Resources:
+  DynamoDbStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./Resources/nested-stack-dynamodb.yml
+
+  LambdaStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./Resources/nested-stack-lambda.yml
+      Parameters:
+        DynamoDbTable: !GetAtt DynamoDbStack.Outputs.TableName
+    DependsOn: DynamoDbStack
+    
+
 ## Install using AWS SAM CLI:
 
 Once you have edited your template and code you can deploy your application using the [AWS SAM CLI Tool](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html) from the command line.
