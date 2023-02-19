@@ -61,7 +61,7 @@ Build & Deploy resources to AWS
     $ sam build -t application-stack.yml
 
     Deploy package
-    Note: Once the package has been built... you will need to navigate to the newly created build folder, which shoul dbe found ./.aws-sam/build
+    Note: Once the package has been built... you will need to navigate to the newly created build folder, found in ./.aws-sam/build
 
     $ cd .aws-sam\build
     The exit deployment into CloudFormation in AWS... running either statement.
