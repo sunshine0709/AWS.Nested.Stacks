@@ -7,8 +7,9 @@ All resources are deployed using a nested stack. The nested stack is split into 
 
 Take a look at the parent stack found under the CloudFormation folder-> `application-stack.yml`.
 
-This file lok soemthing like this..
+This file look soemthing like this..
 
+```
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: aws nested stack example
@@ -27,6 +28,12 @@ Resources:
         DynamoDbTable: !GetAtt DynamoDbStack.Outputs.TableName
     DependsOn: DynamoDbStack
     
+ Outputs:
+  LambdaFunctionName:
+    Description: The name of the Lambda function
+    Value: !GetAtt LambdaStack.Outputs.LambdaFunctionArn
+    
+``` 
 
 ## Install using AWS SAM CLI:
 
