@@ -9,7 +9,7 @@ Take a look at the parent stack found under the CloudFormation folder-> `applica
 
 This file look soemthing like this..
 
-```
+```yaml
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: aws nested stack example
