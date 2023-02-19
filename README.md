@@ -32,7 +32,6 @@ Resources:
   LambdaFunctionName:
     Description: The name of the Lambda function
     Value: !GetAtt LambdaStack.Outputs.LambdaFunctionArn
-    
 ``` 
 
 ## Install using AWS SAM CLI:
