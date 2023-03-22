@@ -75,10 +75,17 @@ Build & Deploy resources to AWS
 
 ## Install using Azure DevOps Pipelines:
 
-below are the following steps you will need to deploy via CICD pipeline using Azure DevOps Pipelines
+Below are the following steps you will need to deploy via CICD pipeline using Azure DevOps Pipelines
 
 ### Step 1:
 
+Update the codeUri field in the nested-stack-lambda.yml file to the following value. This is for the CICD pipeline to find the code location, in order to build the Lambda project. In the Release pipeline we will add a step to replace the `#{System.DefaultWorkingDirectory}#` token.
+
+```yaml
+CodeUri: '#{System.DefaultWorkingDirectory}#/_AWS.Nested.Stacks/AWS.Nested.Stacks'
+```
+
+### Step 2:
 You will need to add your code to a repository in Azure Devops. Your repository should look like this;
 <img src="/Assets/nested-stack-repo.png" alt="Azure DevOps Repo" title="Azure DevOps Repo">
 
@@ -111,6 +118,6 @@ steps:
     publishLocation: 'Container'
 ```
 
-### Step 2:
+### Step 3:
 
 
