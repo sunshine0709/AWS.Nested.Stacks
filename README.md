@@ -79,7 +79,7 @@ Below are the following steps you will need to deploy via CICD pipeline using Az
 
 ### Step 1:
 
-Update the codeUri field in the nested-stack-lambda.yml file to the following value. This is for the CICD pipeline to find the code location, in order to build the Lambda project. In the Release pipeline we will add a step to replace the `#{System.DefaultWorkingDirectory}#` token.
+Update the codeUri field in the `nested-stack-lambda.yml` file to the following value. This is for the CICD pipeline to find the code location, in order to build the Lambda project. In the Release pipeline we will add a step to replace the `#{System.DefaultWorkingDirectory}#` token.
 
 ```yaml
 CodeUri: '#{System.DefaultWorkingDirectory}#/_AWS.Nested.Stacks/AWS.Nested.Stacks'
@@ -119,5 +119,10 @@ steps:
 ```
 
 ### Step 3:
+
+Create the `Release` pipeline.
+We need to add 3 tasks to our pipeline;
+
+#1. Replace token in `nested-stack-lambda.yml` mentioned in step 1.
 
 
