@@ -72,3 +72,42 @@ Build & Deploy resources to AWS
 
     $ sam deploy -t template.yaml -g --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND
 ```
+
+## Install using Azure DevOps Pipelines:
+
+below are the following steps you will need to deploy via CICD pipeline using Azure DevOps Pipelines
+
+### Step 1:
+
+You will need to add your code to a repository in Azure Devops. next create a new Pipeline where you will just publish the project artefacts.
+See example below;
+
+```yaml
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- checkout: self
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish AWS.Nested.Stacks Project
+  condition: succeededOrFailed()
+  inputs:
+    PathtoPublish: 'AWS.Nested.Stacks'
+    ArtifactName: 'AWS.Nested.Stacks'
+    publishLocation: 'Container'
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Cloudformation
+  condition: succeededOrFailed()
+  inputs:
+    PathtoPublish: 'CloudFormation'
+    ArtifactName: 'CloudFormation'
+    publishLocation: 'Container'
+```
+
+
+
