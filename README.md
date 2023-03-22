@@ -121,8 +121,48 @@ steps:
 ### Step 3:
 
 Create the `Release` pipeline.
-We need to add 3 tasks to our pipeline;
+We need to add 3 tasks to our pipeline and should look like this when you finished;
 
-#1. Replace token in `nested-stack-lambda.yml` mentioned in step 1.
+<img src="/Assets/nested-stack-release-pipeline-all-steps.png" alt="Azure DevOps Release Pipeline" title="Azure DevOps Release Pipeline">
+
+1. Replace token in `nested-stack-lambda.yml` mentioned in Step 1, with the yaml looking something like this;
+```yaml
+steps:
+- task: qetza.replacetokens.replacetokens-task.replacetokens@5
+  displayName: 'Replace tokens in nested-stack-lambda.yml'
+  inputs:
+    rootDirectory: '$(System.DefaultWorkingDirectory)/_AWS.Nested.Stacks/CloudFormation/Resources'
+    targetFiles: 'nested-stack-lambda.yml'
+```
+2. Next step is to `build` the package using the `AWS Shell Script` task and point it to the parent application stack template `application-stack.yml`.
+```yaml
+steps:
+- task: AmazonWebServices.aws-vsts-tools.AWSShellScript.AWSShellScript@1
+  displayName: 'AWS Shell Script - SAM Build Package'
+  inputs:
+    awsCredentials: 'AWS Credentials'
+    regionName: 'AWS Region'
+    scriptType: inline
+    inlineScript: |
+     sam.cmd build -t application-stack.yml
+     
+    disableAutoCwd: true
+    workingDirectory: '$(System.DefaultWorkingDirectory)/_AWS.Nested.Stacks/CloudFormation'
+```
+3. The final step is to `deploy` the package also using the `AWS Shell Script` task. This time pointing it to the newly packaged template file `template.yaml` that will created under the `.\CloudFormation\.aws-sam\build` folder.
+```yaml
+steps:
+- task: AmazonWebServices.aws-vsts-tools.AWSShellScript.AWSShellScript@1
+  displayName: 'AWS Shell Script - SAM Deploy Package'
+  inputs:
+    awsCredentials: 'AWS Credentials'
+    regionName: 'AWS Region'
+    scriptType: inline
+    inlineScript: |
+     sam.cmd deploy -t template.yaml --stack-name nested-stack-prototype --s3-bucket `Your S3 Bucket` --s3-prefix `Your S3 Bucket/nested-stack-prototype/` --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND
+     
+    disableAutoCwd: true
+    workingDirectory: '$(System.DefaultWorkingDirectory)\_AWS.Nested.Stacks\CloudFormation\.aws-sam\build'
+```
 
 
