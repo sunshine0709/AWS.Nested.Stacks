@@ -79,8 +79,10 @@ below are the following steps you will need to deploy via CICD pipeline using Az
 
 ### Step 1:
 
-You will need to add your code to a repository in Azure Devops. next create a new Pipeline where you will just publish the project artefacts.
-See example below;
+You will need to add your code to a repository in Azure Devops. Your repository should look like this;
+<img src="/Assets/nested-stack-repo.png" alt="Azure DevOps Repo" title="Azure DevOps Repo">
+
+Next create a new Pipeline where you will publish the project artefacts. See example below;
 
 ```yaml
 trigger:
@@ -111,5 +113,4 @@ steps:
 
 ### Step 2:
 
-<img src="/Assets/nested-stack-repo.png" alt="Azure DevOps Repo" title="Azure DevOps Repo">
 
