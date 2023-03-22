@@ -111,5 +111,5 @@ steps:
 
 ### Step 2:
 
-<img src="nested-stack-repo.png" alt="Azure DevOps Repo" title="Azure DevOps Repo">
+<img src="/Assets/nested-stack-repo.png" alt="Azure DevOps Repo" title="Azure DevOps Repo">
 
