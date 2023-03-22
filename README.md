@@ -53,7 +53,7 @@ If already installed check if new version is available.
 ```
 
 Build & Deploy resources to AWS
-```
+```CLI
     navigate to the CloudFormation folder in command prompt
     $ cd "AWS.Nested.Stacks/CloudFormation"
 
