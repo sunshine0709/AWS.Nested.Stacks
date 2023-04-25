@@ -7,7 +7,7 @@ All resources are deployed using a nested stack. The nested stack is split into 
 
 Take a look at the parent stack found under the CloudFormation folder-> `application-stack.yml`.
 
-This file look soemthing like this..
+This file look something like this..
 
 ```yaml
 AWSTemplateFormatVersion: '2010-09-09'
